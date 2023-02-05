@@ -8,18 +8,19 @@ def get_level_1():
         for j in range(0, 24, 1): 
             if counter >= 0:
                 pass
-            elif (i == 11 and j == 7) or (i == 11 and j == 12) or (i == 8 and j == 16) or (i == 6 and j == 12):
+            elif (i == 12 and j == 7) or (i == 12 and j == 12) or (i == 9 and j == 16) or (i == 7 and j == 10):
                 level[i][j] = 4
                 level[i][j+1] = -4
                 level[i][j+2] = -4
                 counter = 2
             elif(i == 15):
                 level[i][j] = 2
-            elif(i == 3 and j == 21):
+            elif(i == 3 and j == 20):
                 level[i][j] = 1
                 level[i][j+1] = 2
                 level[i][j+2] = 2
-                counter = 2
+                level[i][j+3] = 2
+                counter = 3
             else:
                 level[i][j] = 0
             counter -=1

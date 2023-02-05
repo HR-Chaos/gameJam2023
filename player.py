@@ -5,7 +5,8 @@ import numpy as np
 
 
 class Player:
-    inventory = []
+    inventory = [False, True]
+    # Everbloom, seed
     def init_running_frames(self):
         self.running_frames = [pygame.image.load("assets/mushroom/-2.png"), pygame.image.load("assets/mushroom/-1.png"), pygame.image.load("assets/mushroom/0.png"), pygame.image.load("assets/mushroom/1.png"), pygame.image.load("assets/mushroom/2.png")]
         temp = []
@@ -72,3 +73,7 @@ class Player:
         return self.img.get_height()
     def get_width(self):
         return self.img.get_width()
+    def set_holding(self, index, bool):
+        self.inventory[index] = bool
+    def get_holding(self, index):
+        return self.inventory[index]
