@@ -19,7 +19,7 @@ run = True
 #-------------------------- THIS IS STEPS 1 - 3
 tiles = []
 
-for i in range(5):
+for i in range(1, 6):
     playerImg = pygame.image.load('assets/tiles/' + str(i) + '.png')
     print("width: " + str(playerImg.get_width()) + ", height: " + str(playerImg.get_height()))
     #changes size of image
