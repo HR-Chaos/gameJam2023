@@ -2,6 +2,7 @@ import pygame
 import autotiler
 import numpy as np
 import player
+import level_maker
 
 # initialize pygame and screen
 pygame.init()
@@ -33,22 +34,25 @@ p = player.Player(player_img, 100, 400, 5)
 tile_size = 50
 
 tiles = autotiler.make_tile_array(tile_size)
-map = autotiler.make_map(screen, tile_size)
+map = level_maker.get_level_1()
 
 def draw_map(screen, map):
-    screen.fill((255, 255, 255))
-    for row in range(len(map)):
-        for col in range(len(map[row])):
-            # Convert the tile to a Pygame Surface object
-            tile = tiles[map[row][col]]
-            tile = pygame.image.fromstring(tile.tobytes(), tile.size, tile.mode)
+    screen.fill((0, 0, 0))
+    level = level_maker.get_level_1()
+    level_maker.draw(screen, level)
+    # screen.fill((255, 255, 255))
+    # for row in range(len(map)):
+    #     for col in range(len(map[row])):
+    #         # Convert the tile to a Pygame Surface object
+    #         tile = tiles[map[row][col]]
+    #         tile = pygame.image.fromstring(tile.tobytes(), tile.size, tile.mode)
 
-            # Calculate the position to draw the tile on the screen
-            x = col * tile_size
-            y = row * tile_size
+    #         # Calculate the position to draw the tile on the screen
+    #         x = col * tile_size
+    #         y = row * tile_size
 
-            # Draw the tile on the screen
-            screen.blit(tile, (x, y))
+    #         # Draw the tile on the screen
+    #         screen.blit(tile, (x, y))
 
 def draw_player(screen, x, y, player_state):
     # screen.blit(img, (x, y))
@@ -77,14 +81,14 @@ while run:
 
     if keys[pygame.K_a]:
         player_dx -=1
-        if player_dx < -5:
-            player_dx = -5
+        if player_dx < -10:
+            player_dx = -10
     if keys[pygame.K_d]:
         player_dx += 1
-        if player_dx > 5:
-            player_dx = 5
+        if player_dx > 10:
+            player_dx = 10
     if keys[pygame.K_w] and player_state != JUMP_STATE and player_state != FALL_STATE:
-        player_dy -= 5
+        player_dy -= 15
     if keys[pygame.K_s]:
         pass
     
@@ -94,17 +98,17 @@ while run:
         player_dy = 25
     
     #check player collision with map
-    if map[(p.get_y()+1+p.get_height())//tile_size][p.get_x()//tile_size] >= 1:
+    if map[(p.get_y()+1+p.get_height())//tile_size][(p.get_x()+1+p.get_width())//tile_size] != 0 or map[(p.get_y()+1+p.get_height())//tile_size][(p.get_x())//tile_size] != 0:
         if player_dy > 0:
             player_dy = 0
-    if map[(p.get_y()-1)//tile_size][p.get_x()//tile_size] >= 1:
+    if map[(p.get_y()-1)//tile_size][(p.get_x()+1+p.get_width())//tile_size] != 0:
         if player_dy < 0:
             player_dy = 0
 
     #update player state
-    if player_dx == 0 and player_dy == 0 and map[(p.get_y()+1+p.get_height())//tile_size][p.get_x()//tile_size] >= 1:
+    if player_dx == 0 and player_dy == 0 and map[(p.get_y()+1+p.get_height())//tile_size][p.get_x()//tile_size] != 0:
         player_state = IDLE_STATE
-    elif player_dx != 0 and map[(p.get_y()+1+p.get_height())//tile_size][p.get_x()//tile_size] >= 1:
+    elif player_dx != 0 and map[(p.get_y()+1+p.get_height())//tile_size][p.get_x()//tile_size] != 0:
         player_state = WALK_STATE
     elif player_dy < 0:
         player_state = JUMP_STATE
