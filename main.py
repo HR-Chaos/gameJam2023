@@ -1,16 +1,45 @@
 import pygame
 import autotiler
 import numpy as np
+from PIL import Image
+#import button
 
 # initialize pygame and screen
 pygame.init()
 
 SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = int(SCREEN_WIDTH*9/16)
+SCREEN_HEIGHT = int(SCREEN_WIDTH*9/16) #675
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("gameJam2023")
 run = True
+
+######################################################################################
+#Ritesh's code
+#-------------------------- THIS IS STEPS 1 - 3
+tiles = []
+
+for i in range(5):
+    playerImg = pygame.image.load('assets/tiles/' + str(i) + '.png')
+    print("width: " + str(playerImg.get_width()) + ", height: " + str(playerImg.get_height()))
+    #changes size of image
+    playerImg = pygame.transform.scale(playerImg, (75, 75))
+    print("width: " + str(playerImg.get_width()) + ", height: " + str(playerImg.get_height()))
+    tiles.append(playerImg)
+#-------------------------- THIS IS STEPS 1 - 3
+
+#initialize buttons
+#how_to_play_image = pygame.image.load('assets/buttons/howToPlayButton.png')
+#how_to_play_button = button.Button(100, 200, how_to_play_image, .1)
+
+#initialize starting menu text
+title_font = pygame.font.Font('freesansbold.ttf', 64)
+
+def show_title_text():
+    title_text = title_font.render("GameJam", True, (128, 255, 212))
+    screen.blit(title_text, (450, 150))
+
+######################################################################################
 
 # initialize location of player
 x = 200
@@ -43,8 +72,16 @@ while run:
         # quit game
         if event.type == pygame.QUIT:
             run = False
-          
-    draw_map(screen, map)  
+
+    #if how_to_play_button.draw(screen):
+    #    print('Pressed How to Play')
+
+#########################################################
+#Ritesh's code
+    show_title_text()
+#########################################################
+
+    #draw_map(screen, map)  
     # update display
     pygame.display.update()
     
